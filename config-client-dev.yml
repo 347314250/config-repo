@@ -1,2 +1,42 @@
-# config-repo
-spring.applicaiton=......
+spring:
+  application:
+    name: config-server
+server:
+  port: 7070
+name: xumeng
+
+zuul:
+  prefix: /api
+  ratelimit:
+    enabled: true
+    repository: REDIS
+    default-policy-list:
+      - limit: 3
+        refresh-interval: 60
+        type:
+          - origin
+#  SendErrorFilter:
+#    post:
+#      disable: true
+#  SendResponseFilter:
+#    post:
+#      disable: true
+
+#  routes:
+#    sentinel-demo:   #路由id，自定义
+#      path: /sentinel-demo/**   #请求url的映射路径
+#     # url: http://localhost:9999/   #映射路径对应的url地址
+#      serviceId: sentinel-demo   #根据serviceId  自动从注册中心获取地址并转发请求
+
+eureka:
+  instance:
+    hostname: localhost  #主机名称，缺省值是操作系统的主机名称
+    #eureka页面显示ip:port  的方式
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+  client:
+    register-with-eureka: true  #是否将自己注册到注册中心,单节点设置为false，集群设置为true
+    fetch-registry: true     #是否从注册中心获取服务信息,单节点设置为false，集群设置为true
+    service-url:             #注册中心的地址
+      defaultZone: http://root:123456@${eureka.instance.hostname}:8761/eureka/
+    registry-fetch-interval-seconds: 10  #从配置中心拉去服务的时间间隔，默认是30s
