@@ -3,7 +3,7 @@ spring:
     name: zuul-server
 server:
   port: 7070
-name: xumeng  v1.0
+name: xumeng  v2.0
 
 zuul:
   prefix: /api
